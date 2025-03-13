@@ -41,9 +41,6 @@ function App() {
         title={expenses[2].title}
         amount={expenses[2].amount}
       />
-      <ExpenseItem
-        date={expenses[2].date}
-      />
     </div> //Solo se puede retornar un solo componente
   )
 }
