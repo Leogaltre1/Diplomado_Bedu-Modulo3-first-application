@@ -1,8 +1,7 @@
 //import ExpenseItem from './components/ExpenseItem';
-import Expenses from './components/Expenses.jsx';
-
+import Expenses from './components/Expenses/Expenses.jsx';
 import './App.css';
-import './components/Expenses.css';
+import './components/Expenses/Expenses.css';
 
 function App() {
   const expenses = [
