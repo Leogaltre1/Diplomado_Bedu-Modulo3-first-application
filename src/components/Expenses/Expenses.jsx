@@ -10,6 +10,7 @@ function Expenses({items}){
                 items.map(
                     (expense)=>(
                         <ExpenseItem
+                            id={expense.id}
                             date={expense.date}
                             title={expense.title}
                             amount={expense.amount}
