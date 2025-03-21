@@ -1,7 +1,9 @@
 //import ExpenseItem from './components/ExpenseItem';
-import Expenses from './components/Expenses/Expenses.jsx';
+import NewExpense from './components/NewExpense/NewExpense'
+import Expenses from './components/Expenses/Expenses';
 import './App.css';
 import './components/Expenses/Expenses.css';
+
 
 function App() {
   const expenses = [
@@ -28,6 +30,7 @@ function App() {
   return (
     <div>
       <div>Hola Mundo</div>
+      <NewExpense />
       <Expenses items={expenses}/>
       
     </div> //Solo se puede retornar un solo componente
