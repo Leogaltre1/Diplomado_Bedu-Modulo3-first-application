@@ -17,7 +17,14 @@ const ExpenseForm = () => {
     }
     const submitHandler = (event) => {
         event.preventDefault();
+        const expense = {
+            title: title,
+            amount,
+            date
+        }
+        console.log(expense);
     }
+    
     return (
         <form onSubmit={submitHandler}>
             <div className="new-expense-controls">
@@ -100,4 +107,27 @@ Provoca que ahora se pueda predefinir un valor en el return
 <input value={title} onChange={titleInputHandler} type="text" />
 <input onChange={titleInputHandler} type="text" />
 
+--- Control dentro de React
+Basicamente es
+Mi input esta controlado por una funcion llamada setName
+Y esa funcion me llama al valor
+
+Inputs controlados y inputs descontrolados
+
+Recordemos que desde el form se estan controlando todos los valores
+Simplifica el proceso de diseño
+
+--- Mencion de libreria  antes de 1:26 hrs
+
+--- Creacion de un objeto dentro de submitHandler
+const expense = {
+    title: title,
+    amount: amout,
+    date: date
+}
+
+Como el key y el value es el mismo
+Se obvia su value y solo se incluye su key
+
+Con ese evento submit se crea un objeto
 */

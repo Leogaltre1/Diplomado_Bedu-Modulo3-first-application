@@ -1,6 +1,6 @@
-//import ExpenseItem from './components/ExpenseItem';
 import NewExpense from './components/NewExpense/NewExpense'
 import Expenses from './components/Expenses/Expenses';
+
 import './App.css';
 import './components/Expenses/Expenses.css';
 
