@@ -1,33 +1,37 @@
+import { useState } from 'react';
 import './ExpenseForm.css'
 
 const ExpenseForm = () => {
+    const [title, setTitle] = useState('');
+    const [amount, setAmount] = useState('');
+    const [date, setDate] = useState('');
+
     const titleInputHandler = (event) => {
-        console.log(`Title: ${event.target.value}`);
+        setTitle(event.target.value);
     }
     const amountInputHandler = (event) => {
-        console.log(`Amount: ${event.target.value}`);
+        setAmount(event.target.value);
     }
     const dateInputHandler = (event) => {
-        console.log(`Date: ${event.target.value}`);
+        setDate(event.target.value);
     }
     const submitHandler = (event) => {
         event.preventDefault();
-        console.log(event);
     }
     return (
         <form onSubmit={submitHandler}>
             <div className="new-expense-controls">
                 <div className="new-expense-control">
                     <label>Description</label>
-                    <input onChange={titleInputHandler} type="text" />
+                    <input value={title} onChange={titleInputHandler} type="text" />
                 </div>
                 <div className="new-expense-control">
                     <label>Monto</label>
-                    <input onChange={amountInputHandler} type="number" min='1' step='1' />
+                    <input value={amount} onChange={amountInputHandler} type="number" min='1' step='1' />
                 </div>
                 <div className="new-expense-control">
                     <label>Fecha</label>
-                    <input onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
+                    <input value={date} onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
                 </div>
             </div>
             <div className="new-expense-actions">
@@ -89,4 +93,11 @@ te regresa la funcion con la cual tu puedes modificar el estado
 useState('')
 Con esto se le indica el valor inicial que tiene el estado
 Para este caso es vacio NO nulo
+
+Cuando se crea el
+setTitle(event.target.value);
+Provoca que ahora se pueda predefinir un valor en el return
+<input value={title} onChange={titleInputHandler} type="text" />
+<input onChange={titleInputHandler} type="text" />
+
 */
