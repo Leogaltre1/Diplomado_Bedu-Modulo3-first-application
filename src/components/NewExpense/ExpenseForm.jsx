@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './ExpenseForm.css'
 
-const ExpenseForm = () => {
-/*     const [title, setTitle] = useState('');
+const ExpenseForm = ({onSaveExpense}) => {
+    const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
 
@@ -14,9 +14,9 @@ const ExpenseForm = () => {
     }
     const dateInputHandler = (event) => {
         setDate(event.target.value);
-    } */
+    }
 
-    const [data, setData] = useState({
+/*     const [data, setData] = useState({
         title: '',
         amount: '',
         date: ''
@@ -51,6 +51,20 @@ const ExpenseForm = () => {
             date: data.date
         }
         console.log(expense);
+    } */
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+        const expense = {
+            title,
+            amount,
+            date: new Date(date)
+        }
+        onSaveExpense(expense);
+        //console.log(expense);
+        setTitle('');
+        setAmount('');
+        setDate('');
     }
     
     return (
@@ -58,15 +72,15 @@ const ExpenseForm = () => {
             <div className="new-expense-controls">
                 <div className="new-expense-control">
                     <label>Description</label>
-                    <input value={data.title} onChange={titleInputHandler} type="text" />
+                    <input value={title} onChange={titleInputHandler} type="text" />
                 </div>
                 <div className="new-expense-control">
                     <label>Monto</label>
-                    <input value={data.amount} onChange={amountInputHandler} type="number" min='1' step='1' />
+                    <input value={amount} onChange={amountInputHandler} type="number" min='1' step='1' />
                 </div>
                 <div className="new-expense-control">
                     <label>Fecha</label>
-                    <input value={data.date} onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
+                    <input value={date} onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
                 </div>
             </div>
             <div className="new-expense-actions">
@@ -237,4 +251,33 @@ manera asincrónica y las actualizaciones no se sincronizan correctamente.
 Segundo código: Utiliza prevState, lo que garantiza que siempre se 
 actualiza el estado basado en la versión más reciente, incluso cuando 
 las actualizaciones de estado son asincrónicas.
+
+--- Closures?
+
+--- Enviar parametro de Hijo a Padre
+A traves de una prop manda una funcion de padre a hijo
+Hace que hijo haga algo esa funcion y retorna su valor de hijo a padre
+Parent: NewExpense.jsx
+Children: ExpenseForm.jsx
+
+const submitHandler = (event) => {
+    event.preventDefault();
+    const expense = {
+        title,
+        amount,
+        date: new Date(date)
+    }
+    onSaveExpense(expense);
+    //console.log(expense);
+    setTitle('');
+    setAmount('');
+    setDate('');
+}
+
+date: new Date(date)
+Es necesario declararlo como objeto tipo date
+
+Posterior a haber llenado el formulario
+Es necesario limpiarlo y se hace a traves del metodo set de cada Hook
+de useState()
 */

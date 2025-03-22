@@ -1,12 +1,21 @@
+import { useState } from 'react'
+
 import NewExpense from './components/NewExpense/NewExpense'
 import Expenses from './components/Expenses/Expenses';
 
 import './App.css';
-import './components/Expenses/Expenses.css';
 
 
 function App() {
-  const expenses = [
+
+  const [expenses, setExpenses] = useState([]);
+
+  const addExpenseHandler = (expenses) => {
+    setExpenses((prevState) => ([
+      expenses, ...prevState
+  ]))
+  }
+/*   const expenses = [
     {
       id: Math.random(),
       date: new Date(2022, 4, 23),
@@ -25,12 +34,12 @@ function App() {
       title: "Comida",
       amount: 600
     }
-  ];
+  ]; */
 
   return (
     <div>
       <div>Hola Mundo</div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler}/>
       <Expenses items={expenses}/>
       
     </div> //Solo se puede retornar un solo componente
