@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './ExpenseForm.css'
 
 const ExpenseForm = () => {
-    const [title, setTitle] = useState('');
+/*     const [title, setTitle] = useState('');
     const [amount, setAmount] = useState('');
     const [date, setDate] = useState('');
 
@@ -14,13 +14,41 @@ const ExpenseForm = () => {
     }
     const dateInputHandler = (event) => {
         setDate(event.target.value);
+    } */
+
+    const [data, setData] = useState({
+        title: '',
+        amount: '',
+        date: ''
+    })
+
+    const titleInputHandler = (event) => {
+        setData((prevState) => ({
+            ...prevState,
+            title: event.target.value
+        }))
     }
+
+    const amountInputHandler = (event) => {
+        setData((prevState) => ({
+            ...prevState,
+            amount: event.target.value
+        }))
+    }
+
+    const dateInputHandler = (event) => {
+        setData((prevState) => ({
+            ...prevState,
+            date: event.target.value
+        }))
+    }
+
     const submitHandler = (event) => {
         event.preventDefault();
         const expense = {
-            title: title,
-            amount,
-            date
+            title: data.title,
+            amount: data.amount,
+            date: data.date
         }
         console.log(expense);
     }
@@ -30,15 +58,15 @@ const ExpenseForm = () => {
             <div className="new-expense-controls">
                 <div className="new-expense-control">
                     <label>Description</label>
-                    <input value={title} onChange={titleInputHandler} type="text" />
+                    <input value={data.title} onChange={titleInputHandler} type="text" />
                 </div>
                 <div className="new-expense-control">
                     <label>Monto</label>
-                    <input value={amount} onChange={amountInputHandler} type="number" min='1' step='1' />
+                    <input value={data.amount} onChange={amountInputHandler} type="number" min='1' step='1' />
                 </div>
                 <div className="new-expense-control">
                     <label>Fecha</label>
-                    <input value={date} onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
+                    <input value={data.date} onChange={dateInputHandler} type="date" min='2023-01-01' max='2030-12-31' />
                 </div>
             </div>
             <div className="new-expense-actions">
@@ -129,5 +157,84 @@ const expense = {
 Como el key y el value es el mismo
 Se obvia su value y solo se incluye su key
 
-Con ese evento submit se crea un objeto
+Con ese evento submit se crea un objeto ...
+
+--- data
+Es una variable de estado
+
+...data
+Mantiene los valores actuales de los campos de entrada del formulario. 
+El valor inicial de cada propiedad es una cadena vacía, lo que indica 
+que al principio los campos están vacíos
+
+
+const titleInputHandler = (event) => {
+    setData({
+        ...data, // Mantiene los valores previos
+        title: event.target.value // Actualiza el título con el valor ingresado
+    });
+};
+
+El uso de ...data en la actualización es una forma de desestructuración 
+y asegura que los valores previos de amount y date se mantengan mientras 
+solo se actualiza el title
+
+--- prevState
+Es una palabra reservada
+Para tomar una captura del ultimo estado previo
+
+---¿Por qué se usa "data" en lugar de usar estados separados para 
+title, amount, y date?
+El uso de un solo objeto data en lugar de manejar múltiples estados 
+(title, amount, date) tiene ventajas como:
+
+Simplificación:
+Agrupar los datos en un solo estado reduce el número de variables de estado, 
+lo que puede ser más fácil de manejar cuando se tienen formularios con 
+múltiples campos.
+
+Manejo de un solo objeto:
+Al tener un solo estado (data), se facilita el manejo de la información 
+cuando se necesita enviar el formulario o hacer algo con los valores de 
+todos los campos, ya que están todos en un solo objeto
+
+Eficiencia en la actualizacion del estado
+const titleInputHandler = (event) => {
+    setData({
+        ...data,
+        title: event.target.value
+    });
+};
+
+En este código, se está utilizando directamente el valor actual de data al 
+momento de ejecutar la función titleInputHandler. Es decir, el valor de data 
+se obtiene en ese momento exacto en que se ejecuta la función, y luego se 
+actualiza el estado usando ese valor. Sin embargo, el estado en React es 
+asincrónico y las actualizaciones no ocurren de manera inmediata. 
+
+Si se hace una serie de actualizaciones de estado consecutivas en el mismo 
+ciclo de ejecución, es posible que data no esté actualizado al momento de 
+la siguiente actualización de estado, lo que puede dar lugar a inconsistencias.
+
+const titleInputHandler = (event) => { //Con esto se trabaja de forma funcional
+    setData((prevState) => ({
+        ...prevState,
+        title: event.target.value
+    }))
+}
+
+En este caso, se está usando una función de actualización 
+(setData((prevState) => {...})), donde prevState es el valor más reciente 
+del estado, proporcionado automáticamente por React. Este enfoque es más 
+seguro, porque garantiza que React usará la versión más actual del estado 
+al realizar la actualización. Incluso si varias actualizaciones de estado 
+ocurren de manera asincrónica, cada actualización estará basada en el 
+estado más actualizado, evitando problemas de sincronización.
+
+Primer código: Utiliza el valor de data en el momento de la ejecución, 
+lo que puede llevar a inconsistencias si se actualiza el estado de 
+manera asincrónica y las actualizaciones no se sincronizan correctamente.
+Segundo código: Utiliza prevState, lo que garantiza que siempre se 
+actualiza el estado basado en la versión más reciente, incluso cuando 
+las actualizaciones de estado son asincrónicas.
 */
