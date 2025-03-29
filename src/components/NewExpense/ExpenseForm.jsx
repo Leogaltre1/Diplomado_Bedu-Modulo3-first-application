@@ -3,6 +3,60 @@ import styled from "styled-components";
 //import './ExpenseForm.css'
 import styles from "./ExpenseForm.module.css";
 
+const FormControls = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+`;
+
+const FormControl = styled.div`
+    & label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+        outline: none;
+        color: ${({ invalid }) => (invalid ? "#ad0000" : "#000")};
+    }
+
+    & input {
+        font: inherit;
+        padding: 0.5rem;
+        width: 20rem;
+        max-width: 100%;
+        border-radius: 6px;
+        border: 1px solid ${(props) => (props.invalid ? "#ad0000" : "#ccc")};
+    }
+`;
+
+const Button = styled.button`
+    font: inherit;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border: 1px solid #464646;
+    background-color: #464646;
+    color: #e5e5e5;
+    border-radius: 12px;
+    margin-right: 1rem;
+    width: 100%;
+
+    &:hover,
+    &:active {
+        background-color: #afafaf;
+        border-color: #afafaf;
+        color: black;
+    }
+
+    @media (min-width: 768px) {
+        width: auto;
+    }
+`;
+
+const FormActions = styled.div`
+    text-align: right;
+`;
+
 const ExpenseForm = ({ onSaveExpense }) => {
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
@@ -27,60 +81,6 @@ const ExpenseForm = ({ onSaveExpense }) => {
         if (value.length > 0) setIsDateValid(true);
         setDate(value);
     };
-
-    const FormControls = styled.div`
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 1rem;
-        text-align: left;
-    `;
-
-    const FormControl = styled.div`
-        & label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-            outline: none;
-            color: ${({ invalid }) => (invalid ? "#ad0000" : "#000")};
-        }
-
-        & input {
-            font: inherit;
-            padding: 0.5rem;
-            width: 20rem;
-            max-width: 100%;
-            border-radius: 6px;
-            border: 1px solid ${(props) => (props.invalid ? "#ad0000" : "#ccc")};
-        }
-    `;
-
-    const Button = styled.button`
-        font: inherit;
-        cursor: pointer;
-        padding: 0.5rem 1rem;
-        border: 1px solid #464646;
-        background-color: #464646;
-        color: #e5e5e5;
-        border-radius: 12px;
-        margin-right: 1rem;
-        width: 100%;
-
-        &:hover,
-        &:active {
-            background-color: #afafaf;
-            border-color: #afafaf;
-            color: black;
-        }
-
-        @media (min-width: 768px) {
-            width: auto;
-        }
-    `;
-
-    const FormActions = styled.div`
-        text-align: right;
-    `;
 
     /*     const [data, setData] = useState({
         title: '',
