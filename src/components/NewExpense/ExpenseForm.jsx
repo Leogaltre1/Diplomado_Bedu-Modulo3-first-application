@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 //import './ExpenseForm.css'
 import styles from "./ExpenseForm.module.css";
 
@@ -6,17 +7,80 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
-    const [isValid, setIsValid] = useState(true);
+    const [isTitleValid, setIsTitleValid] = useState(true);
+    const [isAmountValid, setIsAmountValid] = useState(true);
+    const [isDateValid, setIsDateValid] = useState(true);
 
+    // Validar que sus campos no esten vacios y asigna su valor
     const titleInputHandler = (event) => {
-        setTitle(event.target.value);
+        const { value } = event.target;
+        if (value.length > 0) setIsTitleValid(true);
+        setTitle(value);
     };
     const amountInputHandler = (event) => {
-        setAmount(event.target.value);
+        const { value } = event.target;
+        if (value.length > 0) setIsAmountValid(true);
+        setAmount(value);
     };
     const dateInputHandler = (event) => {
-        setDate(event.target.value);
+        const { value } = event.target;
+        if (value.length > 0) setIsDateValid(true);
+        setDate(value);
     };
+
+    const FormControls = styled.div`
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        text-align: left;
+    `;
+
+    const FormControl = styled.div`
+        & label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+            outline: none;
+            color: ${({ invalid }) => (invalid ? "#ad0000" : "#000")};
+        }
+
+        & input {
+            font: inherit;
+            padding: 0.5rem;
+            width: 20rem;
+            max-width: 100%;
+            border-radius: 6px;
+            border: 1px solid ${(props) => (props.invalid ? "#ad0000" : "#ccc")};
+        }
+    `;
+
+    const Button = styled.button`
+        font: inherit;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border: 1px solid #464646;
+        background-color: #464646;
+        color: #e5e5e5;
+        border-radius: 12px;
+        margin-right: 1rem;
+        width: 100%;
+
+        &:hover,
+        &:active {
+            background-color: #afafaf;
+            border-color: #afafaf;
+            color: black;
+        }
+
+        @media (min-width: 768px) {
+            width: auto;
+        }
+    `;
+
+    const FormActions = styled.div`
+        text-align: right;
+    `;
 
     /*     const [data, setData] = useState({
         title: '',
@@ -58,11 +122,9 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        /*Validar que los campos no esten vacios*/
-        if (title.trim().length === 0) {
-            setIsValid(false);
-            return;
-        }
+        validateFields();
+        if (!(isTitleValid && isAmountValid && isDateValid)) return;
+
         const expense = {
             title,
             amount,
@@ -75,22 +137,33 @@ const ExpenseForm = ({ onSaveExpense }) => {
         setDate("");
     };
 
+    // Validar que sus campos no esten vacios
+    const validateFields = () => {
+        if (title.trim().length === 0) {
+            setIsTitleValid(false);
+        }
+
+        if (amount.trim().length === 0) {
+            setIsAmountValid(false);
+        }
+
+        if (date.trim().length === 0) {
+            setIsDateValid(false);
+        }
+    };
+
     return (
         <form onSubmit={submitHandler}>
-            <div className={styles["new-expense-controls"]}>
-                <div
-                    className={`${styles["new-expense-control"]} ${
-                        !isValid && styles.invalid
-                    }`}
-                >
+            <FormControls>
+                <FormControl invalid={!isTitleValid}>
                     <label>Description</label>
                     <input
                         value={title}
                         onChange={titleInputHandler}
                         type="text"
                     />
-                </div>
-                <div className={styles["new-expense-control"]}>
+                </FormControl>
+                <FormControl invalid={!isAmountValid}>
                     <label>Monto</label>
                     <input
                         value={amount}
@@ -99,8 +172,8 @@ const ExpenseForm = ({ onSaveExpense }) => {
                         min="1"
                         step="1"
                     />
-                </div>
-                <div className={styles["new-expense-control"]}>
+                </FormControl>
+                <FormControl invalid={!isDateValid}>
                     <label>Fecha</label>
                     <input
                         value={date}
@@ -109,11 +182,11 @@ const ExpenseForm = ({ onSaveExpense }) => {
                         min="2023-01-01"
                         max="2030-12-31"
                     />
-                </div>
-            </div>
-            <div className={styles["new-expense-actions"]}>
-                <button type="submit">Agregar</button>
-            </div>
+                </FormControl>
+            </FormControls>
+            <FormActions>
+                <Button type="submit">Agregar</Button>
+            </FormActions>
         </form>
     );
 };
@@ -135,4 +208,37 @@ object {
     new-expense-control: "_new-expense-control_blabla"
     new-expense-controls:" _new-expense-controls_blabla"
 }
+
+Al usar style components
+La apariencia que se configuraba directamente sobre la etiqueta con style
+Ahora se crea la misma apariencia usando css y o sass dentro del mismo js
+o siendo importado desde otro js.
+
+Sustituyendo a la etiqueta de html y siendo nombrada de la manera deseada
+
+
+<FormActions>
+    <button type="submit">Agregar</button>
+</FormActions>
+
+<div className={styles["new-expense-actions"]}>
+    <button type="submit">Agregar</button>
+</div>
+
+>>> Validacion espacio vacio
+if (title.trim().length === 0) {
+    setIsValid(false);
+    return;
+}
+Si el Input esta vacio envia un false en setIsValid
+
+Condicion en return de ExpenseForm
+invalid={!isValid}>
+Si !isValid===false entonces es true
+Por lo tanto invalid es true
+
+Asi que en
+const FormControl = styled.div`...
+color: ${({ invalid }) => (invalid ? "#ad0000" : "#000")};`
+Si invalid es true aplica #ad0000
 */
