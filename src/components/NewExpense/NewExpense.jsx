@@ -1,25 +1,25 @@
-import Card from "../UI/Card"
-import ExpenseForm from './ExpenseForm'
-import './NewExpense.css'
+import Card from "../UI/Card";
+import ExpenseForm from "./ExpenseForm";
+import "./NewExpense.css";
 
-const NewExpense = ({onAddExpense}) => {
+const NewExpense = ({ onAddExpense }) => {
     const saveExpense = (expense) => {
         const newExpense = {
             ...expense,
-            id: Math.random().toString()
-        }
+            id: Math.random().toString(),
+        };
         //console.log('Print since NewExpense.jsx ',newExpense);
         onAddExpense(newExpense);
-    }
+    };
 
     return (
         <Card className="new-expense">
             <ExpenseForm onSaveExpense={saveExpense} />
         </Card>
-    )
-}
+    );
+};
 
-export default NewExpense
+export default NewExpense;
 
 /*
 Tiene que hacerte saber a App.jsx ciertos valores

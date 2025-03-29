@@ -1,9 +1,9 @@
 import "./ExpensesFilter.css";
 
-function ExpensesFilter({selectedYear, onChangeFilter}) {
+function ExpensesFilter({ selectedYear, onChangeFilter }) {
     const changeHandler = (event) => {
-        onChangeFilter(event.target.value)
-    }
+        onChangeFilter(event.target.value);
+    };
 
     return (
         <div className="expenses-filter">

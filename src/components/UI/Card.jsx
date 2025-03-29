@@ -1,15 +1,13 @@
-import './Card.css';
+import "./Card.css";
 // Famous prop children
-function Card({className, children}) {
+function Card({ className, children }) {
     const classes = `card ${className}`;
 
-    return(
+    return (
         <div>
-            <div className={classes}>
-                {children}
-            </div>
+            <div className={classes}>{children}</div>
         </div>
     );
 }
 
-export default Card
+export default Card;
