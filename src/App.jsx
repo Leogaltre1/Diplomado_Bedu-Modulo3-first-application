@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useState } from "react";
 import NewExpense from "./components/NewExpense/NewExpense";
 import Expenses from "./components/Expenses/Expenses";
@@ -32,11 +33,11 @@ function App() {
   ]; */
 
     return (
-        <div>
+        <Fragment>
             <div>Hola Mundo</div>
             <NewExpense onAddExpense={addExpenseHandler} />
             <Expenses items={expenses} />
-        </div> //Solo se puede retornar un solo componente
+        </Fragment> //Solo se puede retornar un solo componente
     );
 }
 

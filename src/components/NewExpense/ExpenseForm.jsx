@@ -1,7 +1,9 @@
 import { useState } from "react";
 import styled from "styled-components";
+import Button from "../UI/Button";
+import Modal from "../UI/Modal";
 //import './ExpenseForm.css'
-import styles from "./ExpenseForm.module.css";
+//import styles from "./ExpenseForm.module.css";
 
 const FormControls = styled.div`
     display: flex;
@@ -29,7 +31,7 @@ const FormControl = styled.div`
         border: 1px solid ${(props) => (props.invalid ? "#ad0000" : "#ccc")};
     }
 `;
-
+/* 
 const Button = styled.button`
     font: inherit;
     cursor: pointer;
@@ -51,7 +53,7 @@ const Button = styled.button`
     @media (min-width: 768px) {
         width: auto;
     }
-`;
+`; */
 
 const FormActions = styled.div`
     text-align: right;
@@ -64,6 +66,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isAmountValid, setIsAmountValid] = useState(true);
     const [isDateValid, setIsDateValid] = useState(true);
+    const [isOpen, setIsOpen] = useState(true);
 
     // Validar que sus campos no esten vacios y asigna su valor
     const titleInputHandler = (event) => {
@@ -152,42 +155,55 @@ const ExpenseForm = ({ onSaveExpense }) => {
         }
     };
 
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
-        <form onSubmit={submitHandler}>
-            <FormControls>
-                <FormControl invalid={!isTitleValid}>
-                    <label>Description</label>
-                    <input
-                        value={title}
-                        onChange={titleInputHandler}
-                        type="text"
-                    />
-                </FormControl>
-                <FormControl invalid={!isAmountValid}>
-                    <label>Monto</label>
-                    <input
-                        value={amount}
-                        onChange={amountInputHandler}
-                        type="number"
-                        min="1"
-                        step="1"
-                    />
-                </FormControl>
-                <FormControl invalid={!isDateValid}>
-                    <label>Fecha</label>
-                    <input
-                        value={date}
-                        onChange={dateInputHandler}
-                        type="date"
-                        min="2023-01-01"
-                        max="2030-12-31"
-                    />
-                </FormControl>
-            </FormControls>
-            <FormActions>
-                <Button type="submit">Agregar</Button>
-            </FormActions>
-        </form>
+        <>
+            <form onSubmit={submitHandler}>
+                <FormControls>
+                    <FormControl invalid={!isTitleValid}>
+                        <label>Description</label>
+                        <input
+                            value={title}
+                            onChange={titleInputHandler}
+                            type="text"
+                        />
+                    </FormControl>
+                    <FormControl invalid={!isAmountValid}>
+                        <label>Monto</label>
+                        <input
+                            value={amount}
+                            onChange={amountInputHandler}
+                            type="number"
+                            min="1"
+                            step="1"
+                        />
+                    </FormControl>
+                    <FormControl invalid={!isDateValid}>
+                        <label>Fecha</label>
+                        <input
+                            value={date}
+                            onChange={dateInputHandler}
+                            type="date"
+                            min="2023-01-01"
+                            max="2030-12-31"
+                        />
+                    </FormControl>
+                </FormControls>
+                <FormActions>
+                    <Button type="submit">Agregar</Button>
+                </FormActions>
+            </form>
+            {isOpen && (
+                <Modal
+                    title="Modal"
+                    message="Hello world modal"
+                    onConfirm={toggleModal}
+                />
+            )}
+        </>
     );
 };
 
