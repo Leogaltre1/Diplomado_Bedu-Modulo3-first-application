@@ -3,6 +3,10 @@ import Card from "./Card";
 import Button from "./Button";
 import styles from "./Modal.module.css";
 
+function BackDrop(onConfirm) {
+    return <div className={styles.backdrop} onClick={onConfirm} />;
+}
+
 function ModalOverlay({ title, message, onConfirm }) {
     return (
         <Card className={styles.modal}>
@@ -22,6 +26,10 @@ function ModalOverlay({ title, message, onConfirm }) {
 function Modal({ title, message, onConfirm }) {
     return (
         <>
+            {createPortal(
+                <BackDrop onConfirm={onConfirm} />,
+                document.getElementById("modal-backdrop")
+            )}
             {createPortal(
                 <ModalOverlay
                     title={title}

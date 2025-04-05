@@ -66,7 +66,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isAmountValid, setIsAmountValid] = useState(true);
     const [isDateValid, setIsDateValid] = useState(true);
-    const [isOpen, setIsOpen] = useState(true);
+    const [error, setError] = useState(null);
 
     // Validar que sus campos no esten vacios y asigna su valor
     const titleInputHandler = (event) => {
@@ -82,6 +82,14 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const dateInputHandler = (event) => {
         const { value } = event.target;
         if (value.length > 0) setIsDateValid(true);
+
+        if (new Date(value) > new Date()) {
+            setIsDateValid(false);
+            setError({
+                title: "Fecha invalida",
+                message: `Fecha ingresada es incorrecta, no debe ser mayor a ${new Date().toLocaleDateString()}`,
+            });
+        }
         setDate(value);
     };
 
@@ -156,7 +164,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
     };
 
     const toggleModal = () => {
-        setIsOpen(!isOpen);
+        setError(null);
     };
 
     return (
@@ -196,10 +204,10 @@ const ExpenseForm = ({ onSaveExpense }) => {
                     <Button type="submit">Agregar</Button>
                 </FormActions>
             </form>
-            {isOpen && (
+            {error && (
                 <Modal
-                    title="Modal"
-                    message="Hello world modal"
+                    title={error.title}
+                    message={error.message}
                     onConfirm={toggleModal}
                 />
             )}
