@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
@@ -60,6 +60,8 @@ const FormActions = styled.div`
 `;
 
 const ExpenseForm = ({ onSaveExpense }) => {
+    const titleRef = useRef(null);
+
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
@@ -142,7 +144,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
             date: new Date(date),
         };
         onSaveExpense(expense);
-        //console.log(expense);
+
         setTitle("");
         setAmount("");
         setDate("");
@@ -152,6 +154,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
     const validateFields = () => {
         if (title.trim().length === 0) {
             setIsTitleValid(false);
+            titleRef.current.focus();
         }
 
         if (amount.trim().length === 0) {
@@ -177,6 +180,7 @@ const ExpenseForm = ({ onSaveExpense }) => {
                             value={title}
                             onChange={titleInputHandler}
                             type="text"
+                            ref={titleRef}
                         />
                     </FormControl>
                     <FormControl invalid={!isAmountValid}>
